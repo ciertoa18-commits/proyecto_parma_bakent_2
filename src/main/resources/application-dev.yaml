@@ -1,0 +1,46 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1522/freepdb1
+    username: ${DB_USERNAME:Prarmas}
+    password: ${DB_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+
+      ddl-auto: validate
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+    baseline-on-migrate: true
+    baseline-version: 1
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+    pe.edu.upeu.PharmaBackend: DEBUG
+    pe.edu.upeu.PharmaBackend.service.impl: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level [%X{requestId}] %logger{36} - %msg%n"
+app:
+  cors:
+    allowed-origins: http://localhost:5173,http://127.0.0.1:5173,http://localhost:4200
+
+  jwt:
+    secret: ${JWT_SECRET}
+    expiracion-minutos: 60
